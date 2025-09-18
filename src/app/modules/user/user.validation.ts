@@ -5,7 +5,10 @@ const createUserValidationSchema = z.object({
     firstName: z.string({ message: 'First name is required' }).min(2).max(100),
     lastName: z.string({ message: 'Last name is required' }).min(2).max(100),
     email: z.string({ message: 'Email is required' }),
-    password: z.string({ message: 'Password is required' }).min(6 ,{ message: 'Password must be at least 6 characters long' }).max(100),
+    password: z
+      .string({ message: 'Password is required' })
+      .min(6, { message: 'Password must be at least 6 characters long' })
+      .max(100),
     phone: z.string({ message: 'Phone number is required' }).min(11).max(15),
     designation: z.string().max(100).optional(),
     department: z.string().max(100).optional(),
@@ -28,7 +31,11 @@ const updateUserValidationSchema = z.object({
     lastName: z.string().min(2).max(100).optional(),
     phone: z.string().min(11).max(15).optional(),
     designation: z.string().max(100).optional(),
-    password: z.string().min(6 ,{ message: 'Password must be at least 6 characters long' }).max(100).optional(),
+    password: z
+      .string()
+      .min(6, { message: 'Password must be at least 6 characters long' })
+      .max(100)
+      .optional(),
     department: z.string().max(100).optional(),
     postCode: z.string().optional(),
     thana: z.string().min(2).max(100).optional(),
@@ -43,7 +50,29 @@ const updateUserValidationSchema = z.object({
   }),
 });
 
+
+const updateMyProfileValidationSchema = z.object({
+  body: z.object({
+    firstName: z.string().min(2).max(100).optional(),
+    lastName: z.string().min(2).max(100).optional(),
+    phone: z.string().min(11).max(15).optional(),
+    password: z
+      .string()
+      .min(6, { message: 'Password must be at least 6 characters long' })
+      .max(100)
+      .optional(),
+    postCode: z.string().optional(),
+    thana: z.string().min(2).max(100).optional(),
+    district: z.string().min(2).max(100).optional(),
+    division: z.string().min(2).max(100).optional(),
+    address: z.string().min(10).max(200).optional(),
+    profileImg: z.string().optional(),
+    passwordChangedAt: z.date().optional(),
+  }),
+});
+
 export const UserValidation = {
   createUserValidationSchema,
   updateUserValidationSchema,
+  updateMyProfileValidationSchema,
 };

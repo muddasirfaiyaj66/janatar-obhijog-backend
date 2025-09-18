@@ -20,6 +20,8 @@ A robust backend API for the Janatar Obhijog (Public Complaint System) built wit
   - [API Documentation](#api-documentation)
     - [Authentication Endpoints](#authentication-endpoints)
     - [User Endpoints](#user-endpoints)
+    - [Role-Based Permissions](#role-based-permissions)
+      - [Permission Restrictions:](#permission-restrictions)
   - [Contributing](#contributing)
 
 ## Overview
@@ -220,10 +222,28 @@ pnpm run prettier:fix
 ### User Endpoints
 
 - **POST /api/users/signup**: Create a new user
-- **GET /api/users**: Get all users (admin only)
-- **GET /api/users/:id**: Get a specific user
-- **PATCH /api/users/:id**: Update a user
-- **DELETE /api/users/:id**: Delete a user
+- **GET /api/users**: Get all users (superAdmin only)
+- **GET /api/users/me**: Get current user's profile (authenticated users)
+- **PATCH /api/users/me**: Update current user's profile (authenticated users, with restrictions)
+- **GET /api/users/:id**: Get a specific user (superAdmin only)
+- **PATCH /api/users/:id**: Update a user (superAdmin only)
+- **DELETE /api/users/:id**: Delete a user (superAdmin only)
+
+### Role-Based Permissions
+
+The API implements role-based access control with the following user roles:
+
+- **User**: Regular end users of the application
+- **Admin**: Administrative users with elevated permissions
+- **SuperAdmin**: Highest level administrators with full system access
+
+#### Permission Restrictions:
+
+- Only superAdmins can view, update, or delete other users
+- Regular users and admins can only view and update their own profiles
+- Department and designation fields can only be changed by superAdmins
+- User roles can only be changed by superAdmins
+- Account status fields (isDeleted, isBanned) can only be modified by superAdmins
 
 ## Contributing
 
