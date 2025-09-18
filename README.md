@@ -213,21 +213,21 @@ pnpm run prettier:fix
 
 ### Authentication Endpoints
 
-- **POST /api/auth/login**: User login
-- **POST /api/auth/refresh-token**: Refresh access token
-- **POST /api/auth/change-password**: Change user password
-- **POST /api/auth/forget-password**: Request password reset
-- **POST /api/auth/reset-password**: Reset password with token
+- **POST /api/v1/auth/login**: User login
+- **POST /api/v1/auth/refresh-token**: Refresh access token
+- **POST /api/v1/auth/change-password**: Change user password
+- **POST /api/v1/auth/forget-password**: Request password reset
+- **POST /api/v1/auth/reset-password**: Reset password with token
 
 ### User Endpoints
 
-- **POST /api/users/signup**: Create a new user
-- **GET /api/users**: Get all users (superAdmin only)
-- **GET /api/users/me**: Get current user's profile (authenticated users)
-- **PATCH /api/users/me**: Update current user's profile (authenticated users, with restrictions)
-- **GET /api/users/:id**: Get a specific user (superAdmin only)
-- **PATCH /api/users/:id**: Update a user (superAdmin only)
-- **DELETE /api/users/:id**: Delete a user (superAdmin only)
+- **POST /api/v1/users/signup**: Create a new user
+- **GET /api/v1/users**: Get all users (superAdmin only)
+- **GET /api/v1/users/me**: Get current user's profile (authenticated users)
+- **PATCH /api/v1/users/me**: Update current user's profile (authenticated users, with restrictions)
+- **GET /api/v1/users/:id**: Get a specific user (superAdmin only)
+- **PATCH /api/v1/users/:id**: Update a user (superAdmin only)
+- **DELETE /api/v1/users/:id**: Delete a user (superAdmin only)
 
 ### Role-Based Permissions
 

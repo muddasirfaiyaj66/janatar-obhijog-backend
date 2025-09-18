@@ -1,5 +1,6 @@
 import cookieParser from 'cookie-parser';
 import express from 'express';
+import cors from 'cors';
 import { Application } from 'express';
 import bodyparser from 'body-parser';
 import router from './app/routes';
@@ -11,12 +12,12 @@ const app: Application = express();
 //parser
 app.use(express.json());
 app.use(cookieParser());
-// app.use(
-//     cors({
-//         origin:['http://localhost:3000','https://janatar-obhijog.vercel.app'],
-//         credentials:true
-//     })
-// );
+app.use(
+    cors({
+        origin:['http://localhost:3000','https://janatar-obhijog.vercel.app', 'http://localhost:5173', 'http://localhost:5174'],
+        credentials:true
+    })
+);
 
 // Application route
 
