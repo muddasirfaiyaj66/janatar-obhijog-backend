@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "2abfaa37-9c0a-4384-9505-193e79584710",
+		"name": "JanatarObhijog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "30553850"
+	},
+	"item": [
+		{
+			"name": "SIgn UP",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Muddasir\",\r\n  \"lastName\": \"Faiyaj\",\r\n  \"email\": \"muddasirfaiyaj6@gmail.com\",\r\n  \"password\": \"123456@\",\r\n  \"phone\": \"+8801712345678\",\r\n  \"designation\": \"Software Engineer\",\r\n  \"department\": \"IT\",\r\n  \"role\": \"user\",\r\n  \"profileImg\": \"https://randomuser.me/api/portraits/men/75.jpg\",\r\n  \"postCode\": \"1216\",\r\n  \"thana\": \"Mirpur\",\r\n  \"district\": \"Dhaka\",\r\n  \"division\": \"Dhaka\",\r\n  \"address\": \"House 12, Road 5, Mirpur DOHS, Dhaka\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/users/signup"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"muddasirfaiyaj6@gmail.com\",\r\n    \"password\":\"123456@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/auth/login"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:5000/api/v1",
+			"type": "string"
+		}
+	]
+}
