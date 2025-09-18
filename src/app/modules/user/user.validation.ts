@@ -17,7 +17,7 @@ const createUserValidationSchema = z.object({
     district: z.string({ message: 'District is required' }).min(2).max(100),
     division: z.string({ message: 'Division is required' }).min(2).max(100),
     address: z.string({ message: 'Address is required' }).min(10).max(200),
-    role: z.enum(['admin', 'superAdmin', 'user']),
+    role: z.enum(['admin', 'superAdmin', 'user']).default('user'),
     isDeleted: z.boolean().default(false),
     isBanned: z.boolean().default(false),
     profileImg: z.string().optional(),

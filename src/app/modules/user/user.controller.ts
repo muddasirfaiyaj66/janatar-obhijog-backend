@@ -7,11 +7,27 @@ import { USER_ROLE } from './user.constant';
 
 const createUser = catchAsync(async (req, res) => {
   const result = await UserService.createUserIntoDB(req.body);
+
+  // Set refresh token as httpOnly cookie
+  res.cookie('refreshToken', result.refreshToken, {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+    sameSite: 'none',
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  });
+
+  // Remove password from user object before sending response
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...userWithoutPassword } = result.user;
+
   sendResponse(res, {
-    statusCode: httpStatus.OK,
+    statusCode: httpStatus.CREATED,
     success: true,
     message: 'User created successfully',
-    data: result,
+    data: {
+      user: userWithoutPassword,
+      accessToken: result.accessToken,
+    },
   });
 });
 
@@ -62,9 +78,7 @@ const updateMyProfile = catchAsync(async (req, res) => {
   const userId = req.user?.id;
   const userRole = req.user?.role;
 
- 
   if (userRole !== USER_ROLE.superAdmin) {
-   
     if (req.body.role !== undefined) {
       throw new AppError(
         httpStatus.FORBIDDEN,
