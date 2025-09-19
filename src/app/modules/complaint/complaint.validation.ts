@@ -72,6 +72,19 @@ const createComplaintValidationSchema = z.object({
       ),
     ),
     isAnonymous: z.boolean().default(false),
+    media: z
+      .string()
+      .url('Media must be a valid URL')
+      .refine(
+        (val) => {
+          // Validate that the URL points to an image or video file
+          const mediaRegex =
+            /\.(jpg|jpeg|png|gif|bmp|webp|mp4|avi|mov|wmv|flv|webm)$/i;
+          return mediaRegex.test(val);
+        },
+        { message: 'Media must be a URL pointing to an image or video file' },
+      )
+      .optional(),
   }),
 });
 

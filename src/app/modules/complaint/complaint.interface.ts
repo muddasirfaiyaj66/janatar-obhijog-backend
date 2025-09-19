@@ -26,6 +26,7 @@ export interface TComplaint {
   assignedAdmin?: Types.ObjectId;
 
   isAnonymous?: boolean;
+  media?: string;
 
   votes?: Types.ObjectId[];
   comments?: {

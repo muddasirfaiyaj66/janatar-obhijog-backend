@@ -75,6 +75,23 @@ const complaintSchema = new Schema<IComplaintDocument, ComplaintModel>(
     assignedAdmin: { type: Schema.Types.ObjectId, ref: 'User' },
 
     isAnonymous: { type: Boolean, default: false },
+    media: {
+      type: String,
+      required: false,
+      trim: true,
+      validate: {
+        validator: function (v: string) {
+          if (!v) {
+            return true; // Optional field
+          }
+          // Basic URL validation for images/videos
+          const urlRegex =
+            /^https?:\/\/.+\.(jpg|jpeg|png|gif|bmp|webp|mp4|avi|mov|wmv|flv|webm)$/i;
+          return urlRegex.test(v);
+        },
+        message: 'Media must be a valid URL to an image or video file',
+      },
+    },
 
     votes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     comments: [

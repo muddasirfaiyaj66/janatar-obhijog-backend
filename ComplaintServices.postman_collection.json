@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "complaint-services-test-collection",
     "name": "Janatar Obhijog - Complaint Services",
-    "description": "Complete Postman collection for testing all complaint-related API endpoints. Updated to include new required location fields (postCode, thana, district, division, address) as per the latest validation schema.",
+    "description": "Complete Postman collection for testing all complaint-related API endpoints. Updated to include new required location fields (postCode, thana, district, division, address) and optional media field (image/video URL) as per the latest validation schema.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -146,7 +146,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Road damage in Mirpur area\",\n    \"description\": \"There is a large pothole in front of Mirpur-10 roundabout that needs immediate attention. It's causing traffic congestion and vehicle damage.\",\n    \"category\": \"Infrastructure\",\n    \"postCode\": \"1216\",\n    \"thana\": \"Mirpur\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Mirpur-10 roundabout, near the shopping complex, Dhaka-1216\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"road-infrastructure\",\n    \"isAnonymous\": false\n}"
+              "raw": "{\n    \"title\": \"Road damage in Mirpur area\",\n    \"description\": \"There is a large pothole in front of Mirpur-10 roundabout that needs immediate attention. It's causing traffic congestion and vehicle damage.\",\n    \"category\": \"Infrastructure\",\n    \"postCode\": \"1216\",\n    \"thana\": \"Mirpur\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Mirpur-10 roundabout, near the shopping complex, Dhaka-1216\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"road-infrastructure\",\n    \"media\": \"https://example.com/pothole-image.jpg\",\n    \"isAnonymous\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/complaints",
@@ -187,7 +187,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Water supply issues in my building\",\n    \"description\": \"We have been experiencing low water pressure and irregular water supply in our apartment building for the past week.\",\n    \"category\": \"Utilities\",\n    \"postCode\": \"1207\",\n    \"thana\": \"Dhanmondi\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Road 15, House 25, Dhanmondi Residential Area, Dhaka-1207\",\n    \"priority\": \"medium\",\n    \"visibility\": \"private\",\n    \"department\": \"water-supply\",\n    \"isAnonymous\": false\n}"
+              "raw": "{\n    \"title\": \"Water supply issues in my building\",\n    \"description\": \"We have been experiencing low water pressure and irregular water supply in our apartment building for the past week.\",\n    \"category\": \"Utilities\",\n    \"postCode\": \"1207\",\n    \"thana\": \"Dhanmondi\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Road 15, House 25, Dhanmondi Residential Area, Dhaka-1207\",\n    \"priority\": \"medium\",\n    \"visibility\": \"private\",\n    \"department\": \"water-supply\",\n    \"media\": \"https://example.com/water-issue-video.mp4\",\n    \"isAnonymous\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/complaints",
@@ -512,7 +512,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Unhygienic conditions at local hospital\",\n    \"description\": \"The local government hospital has poor sanitation and cleanliness standards. Patients are at risk of infections.\",\n    \"category\": \"Health\",\n    \"postCode\": \"1205\",\n    \"thana\": \"Tejgaon\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Tejgaon Government Hospital, Tejgaon Industrial Area, Dhaka-1205\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"health\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Unhygienic conditions at local hospital\",\n    \"description\": \"The local government hospital has poor sanitation and cleanliness standards. Patients are at risk of infections.\",\n    \"category\": \"Health\",\n    \"postCode\": \"1205\",\n    \"thana\": \"Tejgaon\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Tejgaon Government Hospital, Tejgaon Industrial Area, Dhaka-1205\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"health\",\n    \"media\": \"https://example.com/hospital-hygiene-issue.png\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",
