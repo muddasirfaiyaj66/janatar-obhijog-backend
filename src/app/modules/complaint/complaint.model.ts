@@ -4,6 +4,7 @@ import {
   COMPLAINT_STATUS,
   COMPLAINT_PRIORITY,
   COMPLAINT_VISIBILITY,
+  DEPARTMENTS,
 } from './complaint.constant';
 
 // Define the document interface
@@ -17,6 +18,37 @@ const complaintSchema = new Schema<IComplaintDocument, ComplaintModel>(
     title: { type: String, required: true },
     description: { type: String, required: true },
     category: { type: String, required: true },
+
+    // Location fields
+    postCode: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+    thana: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+    district: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+    division: {
+      type: String,
+      required: true,
+      trim: true,
+      index: true,
+    },
+    address: {
+      type: String,
+      required: true,
+      trim: true,
+    },
 
     status: {
       type: String,
@@ -35,9 +67,9 @@ const complaintSchema = new Schema<IComplaintDocument, ComplaintModel>(
     },
 
     department: {
-      type: Schema.Types.ObjectId,
-      ref: 'Department',
+      type: String,
       required: true,
+      enum: Object.values(DEPARTMENTS),
     },
     citizen: { type: Schema.Types.ObjectId, ref: 'User' },
     assignedAdmin: { type: Schema.Types.ObjectId, ref: 'User' },

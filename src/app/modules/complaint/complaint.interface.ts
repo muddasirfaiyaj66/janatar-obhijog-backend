@@ -10,11 +10,18 @@ export interface TComplaint {
   description: string;
   category: string;
 
+  // Location fields
+  postCode: string;
+  thana: string;
+  district: string;
+  division: string;
+  address: string;
+
   status: (typeof COMPLAINT_STATUS)[keyof typeof COMPLAINT_STATUS];
   priority: (typeof COMPLAINT_PRIORITY)[keyof typeof COMPLAINT_PRIORITY];
   visibility: (typeof COMPLAINT_VISIBILITY)[keyof typeof COMPLAINT_VISIBILITY];
 
-  department: Types.ObjectId;
+  department: string;
   citizen?: Types.ObjectId;
   assignedAdmin?: Types.ObjectId;
 

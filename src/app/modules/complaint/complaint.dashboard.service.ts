@@ -9,7 +9,6 @@ const getCitizenDashboard = async (userId: string) => {
   ]);
 
   const recent = await Complaint.find({ citizen: userId })
-    .populate('department', 'name')
     .sort({ createdAt: -1 })
     .limit(10);
 

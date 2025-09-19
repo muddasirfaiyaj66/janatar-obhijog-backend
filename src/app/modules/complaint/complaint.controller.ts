@@ -122,10 +122,53 @@ const getPublicComplaints = catchAsync(async (req, res) => {
   });
 });
 
+const getComplaintsByLocation = catchAsync(async (req, res) => {
+  const { division, district, thana, postCode } = req.query;
+  const result = await ComplaintService.getComplaintsByLocationFromDB(
+    {
+      division: division as string,
+      district: district as string,
+      thana: thana as string,
+      postCode: postCode as string,
+    },
+    req.query as TQuery,
+  );
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Location-based complaints retrieved successfully',
+    data: result.data,
+    meta: result.pagination,
+  });
+});
+
+const getComplaintStatsByLocation = catchAsync(async (req, res) => {
+  const result = await ComplaintService.getComplaintStatsByLocationFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Complaint statistics by location retrieved successfully',
+    data: result,
+  });
+});
+
+const getLocationOptions = catchAsync(async (req, res) => {
+  const result = await ComplaintService.getLocationOptionsFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Location options retrieved successfully',
+    data: result,
+  });
+});
+
 export const ComplaintController = {
   createComplaint,
   getComplaints,
   getPublicComplaints,
+  getComplaintsByLocation,
+  getComplaintStatsByLocation,
+  getLocationOptions,
   resolveComplaint,
   voteComplaint,
   commentComplaint,

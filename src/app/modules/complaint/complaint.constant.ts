@@ -41,3 +41,29 @@ export const DEPARTMENTS = {
 } as const;
 
 export type TDepartment = keyof typeof DEPARTMENTS;
+
+// Searchable fields for complaints
+export const COMPLAINT_SEARCHABLE_FIELDS = [
+  'title',
+  'description',
+  'category',
+  'postCode',
+  'thana',
+  'district',
+  'division',
+  'address',
+];
+
+// Filterable fields for complaints
+export const COMPLAINT_FILTERABLE_FIELDS = [
+  'status',
+  'priority',
+  'visibility',
+  'category',
+  'department',
+  'postCode',
+  'thana',
+  'district',
+  'division',
+  'isAnonymous',
+];

@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "complaint-services-test-collection",
     "name": "Janatar Obhijog - Complaint Services",
-    "description": "Complete Postman collection for testing all complaint-related API endpoints",
+    "description": "Complete Postman collection for testing all complaint-related API endpoints. Updated to include new required location fields (postCode, thana, district, division, address) as per the latest validation schema.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -146,7 +146,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Road damage in Mirpur area\",\n    \"description\": \"There is a large pothole in front of Mirpur-10 roundabout that needs immediate attention. It's causing traffic congestion and vehicle damage.\",\n    \"category\": \"Infrastructure\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"road-infrastructure\",\n    \"isAnonymous\": false\n}"
+              "raw": "{\n    \"title\": \"Road damage in Mirpur area\",\n    \"description\": \"There is a large pothole in front of Mirpur-10 roundabout that needs immediate attention. It's causing traffic congestion and vehicle damage.\",\n    \"category\": \"Infrastructure\",\n    \"postCode\": \"1216\",\n    \"thana\": \"Mirpur\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Mirpur-10 roundabout, near the shopping complex, Dhaka-1216\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"road-infrastructure\",\n    \"isAnonymous\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/complaints",
@@ -187,7 +187,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Water supply issues in my building\",\n    \"description\": \"We have been experiencing low water pressure and irregular water supply in our apartment building for the past week.\",\n    \"category\": \"Utilities\",\n    \"priority\": \"medium\",\n    \"visibility\": \"private\",\n    \"department\": \"water-supply\",\n    \"isAnonymous\": false\n}"
+              "raw": "{\n    \"title\": \"Water supply issues in my building\",\n    \"description\": \"We have been experiencing low water pressure and irregular water supply in our apartment building for the past week.\",\n    \"category\": \"Utilities\",\n    \"postCode\": \"1207\",\n    \"thana\": \"Dhanmondi\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Road 15, House 25, Dhanmondi Residential Area, Dhaka-1207\",\n    \"priority\": \"medium\",\n    \"visibility\": \"private\",\n    \"department\": \"water-supply\",\n    \"isAnonymous\": false\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/complaints",
@@ -212,7 +212,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"Corruption in local government office\",\n    \"description\": \"I witnessed bribery taking place at the local municipality office. Officials are demanding extra money for basic services.\",\n    \"category\": \"Corruption\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"corruption\",\n    \"isAnonymous\": true\n}"
+              "raw": "{\n    \"title\": \"Corruption in local government office\",\n    \"description\": \"I witnessed bribery taking place at the local municipality office. Officials are demanding extra money for basic services.\",\n    \"category\": \"Corruption\",\n    \"postCode\": \"1000\",\n    \"thana\": \"Ramna\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Municipal Corporation Office, Ramna Thana, Dhaka-1000\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"corruption\",\n    \"isAnonymous\": true\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/complaints",
@@ -512,7 +512,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Unhygienic conditions at local hospital\",\n    \"description\": \"The local government hospital has poor sanitation and cleanliness standards. Patients are at risk of infections.\",\n    \"category\": \"Health\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"health\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Unhygienic conditions at local hospital\",\n    \"description\": \"The local government hospital has poor sanitation and cleanliness standards. Patients are at risk of infections.\",\n    \"category\": \"Health\",\n    \"postCode\": \"1205\",\n    \"thana\": \"Tejgaon\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Tejgaon Government Hospital, Tejgaon Industrial Area, Dhaka-1205\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"health\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",
@@ -537,7 +537,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Shortage of teachers in primary school\",\n    \"description\": \"The local primary school has been operating with only 2 teachers for 150 students for the past 3 months.\",\n    \"category\": \"Education\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"education\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Shortage of teachers in primary school\",\n    \"description\": \"The local primary school has been operating with only 2 teachers for 150 students for the past 3 months.\",\n    \"category\": \"Education\",\n    \"postCode\": \"1230\",\n    \"thana\": \"Keraniganj\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Keraniganj Government Primary School, Keraniganj, Dhaka-1230\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"education\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",
@@ -562,7 +562,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Missing traffic signals causing accidents\",\n    \"description\": \"The traffic signal at the main intersection has been broken for 2 weeks, causing multiple minor accidents.\",\n    \"category\": \"Traffic\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"traffic\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Missing traffic signals causing accidents\",\n    \"description\": \"The traffic signal at the main intersection has been broken for 2 weeks, causing multiple minor accidents.\",\n    \"category\": \"Traffic\",\n    \"postCode\": \"1212\",\n    \"thana\": \"Pallabi\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Main intersection near Pallabi Bus Stand, Pallabi, Dhaka-1212\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"traffic\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",
@@ -592,7 +592,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Request for more street lights\",\n    \"description\": \"Our neighborhood would benefit from additional street lighting for better visibility at night.\",\n    \"category\": \"Infrastructure\",\n    \"priority\": \"low\",\n    \"visibility\": \"public\",\n    \"department\": \"municipality\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Request for more street lights\",\n    \"description\": \"Our neighborhood would benefit from additional street lighting for better visibility at night.\",\n    \"category\": \"Infrastructure\",\n    \"postCode\": \"1219\",\n    \"thana\": \"Kafrul\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Block C, Road 5, Kafrul Residential Area, Dhaka-1219\",\n    \"priority\": \"low\",\n    \"visibility\": \"public\",\n    \"department\": \"municipality\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",
@@ -617,7 +617,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"title\": \"Garbage collection delays\",\n    \"description\": \"Garbage collection in our area has been delayed by 2-3 days regularly, causing hygiene issues.\",\n    \"category\": \"Sanitation\",\n    \"priority\": \"medium\",\n    \"visibility\": \"public\",\n    \"department\": \"waste-management\",\n    \"isAnonymous\": false\n}"
+                  "raw": "{\n    \"title\": \"Garbage collection delays\",\n    \"description\": \"Garbage collection in our area has been delayed by 2-3 days regularly, causing hygiene issues.\",\n    \"category\": \"Sanitation\",\n    \"postCode\": \"1208\",\n    \"thana\": \"Hazaribagh\",\n    \"district\": \"Dhaka\",\n    \"division\": \"Dhaka\",\n    \"address\": \"Hazaribagh Residential Area, Lane 3, House 45, Dhaka-1208\",\n    \"priority\": \"medium\",\n    \"visibility\": \"public\",\n    \"department\": \"waste-management\",\n    \"isAnonymous\": false\n}"
                 },
                 "url": {
                   "raw": "{{baseUrl}}/complaints",

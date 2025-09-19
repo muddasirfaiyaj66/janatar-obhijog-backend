@@ -1,6 +1,9 @@
 import { Complaint } from './complaint.model';
 import { TComplaint } from './complaint.interface';
-import { COMPLAINT_STATUS } from './complaint.constant';
+import {
+  COMPLAINT_STATUS,
+  COMPLAINT_SEARCHABLE_FIELDS,
+} from './complaint.constant';
 import { sendEmail } from '../../utils/sendEmail';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
@@ -39,7 +42,7 @@ const getComplaintsFromDB = async (
 
   // Apply search, filter, sort, and pagination
   const complaintQuery = new QueryBuilder(baseQuery, query)
-    .search(['title', 'description', 'category'])
+    .search(COMPLAINT_SEARCHABLE_FIELDS)
     .filter()
     .sort()
     .paginate()
@@ -76,7 +79,7 @@ const resolveComplaint = async (
       throw new AppError(httpStatus.NOT_FOUND, 'Admin user not found');
     }
 
-    if (complaint.department.toString() !== admin.department?.toString()) {
+    if (complaint.department !== admin.department) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
         'Not authorized to resolve this complaint',
@@ -160,7 +163,7 @@ const getPublicComplaintsFromDB = async (
 
   // Apply search, filter, sort, and pagination
   const complaintQuery = new QueryBuilder(baseQuery, query)
-    .search(['title', 'description', 'category'])
+    .search(COMPLAINT_SEARCHABLE_FIELDS)
     .filter()
     .sort()
     .paginate()
@@ -179,10 +182,102 @@ const getPublicComplaintsFromDB = async (
   };
 };
 
+// get complaints by location (district, thana, etc.)
+const getComplaintsByLocationFromDB = async (
+  location: {
+    division?: string;
+    district?: string;
+    thana?: string;
+    postCode?: string;
+  },
+  query: TQuery,
+): Promise<TQueryResult<TComplaint>> => {
+  const locationFilter: Record<string, string> = { visibility: 'public' };
+
+  if (location.division) {
+    locationFilter.division = location.division;
+  }
+  if (location.district) {
+    locationFilter.district = location.district;
+  }
+  if (location.thana) {
+    locationFilter.thana = location.thana;
+  }
+  if (location.postCode) {
+    locationFilter.postCode = location.postCode;
+  }
+
+  const baseQuery = Complaint.find(locationFilter);
+
+  const complaintQuery = new QueryBuilder(baseQuery, query)
+    .search(COMPLAINT_SEARCHABLE_FIELDS)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  const data = await complaintQuery.modelQuery.populate(
+    'citizen',
+    'firstName lastName email',
+  );
+  const pagination = await complaintQuery.getPaginationInfo();
+
+  return {
+    data,
+    pagination,
+  };
+};
+
+// get complaint statistics by location
+const getComplaintStatsByLocationFromDB = async () => {
+  return await Complaint.aggregate([
+    {
+      $group: {
+        _id: {
+          division: '$division',
+          district: '$district',
+          thana: '$thana',
+        },
+        totalComplaints: { $sum: 1 },
+        pendingComplaints: {
+          $sum: { $cond: [{ $eq: ['$status', 'pending'] }, 1, 0] },
+        },
+        resolvedComplaints: {
+          $sum: { $cond: [{ $eq: ['$status', 'resolved'] }, 1, 0] },
+        },
+        inProgressComplaints: {
+          $sum: { $cond: [{ $eq: ['$status', 'in-progress'] }, 1, 0] },
+        },
+      },
+    },
+    {
+      $sort: { totalComplaints: -1 },
+    },
+  ]);
+};
+
+// get all unique locations for filtering options
+const getLocationOptionsFromDB = async () => {
+  const divisions = await Complaint.distinct('division');
+  const districts = await Complaint.distinct('district');
+  const thanas = await Complaint.distinct('thana');
+  const postCodes = await Complaint.distinct('postCode');
+
+  return {
+    divisions: divisions.sort(),
+    districts: districts.sort(),
+    thanas: thanas.sort(),
+    postCodes: postCodes.sort(),
+  };
+};
+
 export const ComplaintService = {
   createComplaintIntoDB,
   getComplaintsFromDB,
   getPublicComplaintsFromDB,
+  getComplaintsByLocationFromDB,
+  getComplaintStatsByLocationFromDB,
+  getLocationOptionsFromDB,
   resolveComplaint,
   voteComplaint,
   commentComplaint,

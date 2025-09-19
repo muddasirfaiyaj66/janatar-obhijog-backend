@@ -10,6 +10,11 @@ const router = express.Router();
 // Public route - no authentication required for public and anonymous complaints
 router.get('/public', ComplaintController.getPublicComplaints);
 
+// Location-based routes
+router.get('/location', ComplaintController.getComplaintsByLocation);
+router.get('/stats/location', ComplaintController.getComplaintStatsByLocation);
+router.get('/options/location', ComplaintController.getLocationOptions);
+
 router.post(
   '/',
   auth(USER_ROLE.user),
