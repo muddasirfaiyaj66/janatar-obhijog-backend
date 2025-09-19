@@ -8,6 +8,7 @@ import { User } from '../modules/user/user.model';
 import AppError from '../errors/AppError';
 import config from '../config';
 import { sendEmail } from '../utils/sendEmail';
+import { generatePasswordResetEmailHTML } from '../utils/emailTemplate';
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExistByEmail(payload.email);
@@ -176,7 +177,21 @@ const forgetPassword = async (email: string) => {
 
   const resetUILink = `${config.reset_pass_ui_link}?id=${user._id}&token=${resetToken}`;
 
-  sendEmail(user.email, resetUILink, 'Reset Password Link');
+  const emailHTML = generatePasswordResetEmailHTML({
+    name: `${user.firstName} ${user.lastName}`,
+    resetLink: resetUILink,
+  });
+
+  try {
+    await sendEmail(user?.email, emailHTML, 'পাসওয়ার্ড রিসেট - জনতার অভিযোগ');
+    console.log(`Password reset email sent successfully to ${user.email}`);
+  } catch (error) {
+    console.error('Failed to send password reset email:', error);
+    throw new AppError(
+      httpStatus.INTERNAL_SERVER_ERROR,
+      'Failed to send password reset email. Please try again later.',
+    );
+  }
 };
 
 const resetPassword = async (

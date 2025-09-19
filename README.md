@@ -20,6 +20,8 @@ A robust backend API for the Janatar Obhijog (Public Complaint System) built wit
   - [API Documentation](#api-documentation)
     - [Authentication Endpoints](#authentication-endpoints)
     - [User Endpoints](#user-endpoints)
+    - [Complaint Endpoints](#complaint-endpoints)
+    - [Dashboard Endpoints](#dashboard-endpoints)
     - [Role-Based Permissions](#role-based-permissions)
       - [Permission Restrictions:](#permission-restrictions)
   - [Contributing](#contributing)
@@ -32,6 +34,11 @@ The Janatar Obhijog Backend provides a comprehensive API for managing user accou
 
 - **User Management**: Create, read, update, and delete user accounts
 - **Authentication**: Secure login with JWT, refresh tokens, and password management
+- **Complaint Management**: Submit, view, and manage public complaints
+- **Voting System**: Users can vote on complaints to show support
+- **Comment System**: Users can comment on complaints for discussion
+- **Complaint Resolution**: Admins can resolve complaints with status tracking
+- **Dashboard Analytics**: Role-based dashboards for citizens, admins, and super admins
 - **Role-based Access Control**: Different permissions for users, admins, and superadmins
 - **Email Notifications**: Sends welcome emails and password reset links
 - **Error Handling**: Comprehensive error handling with appropriate HTTP status codes
@@ -87,6 +94,15 @@ janatar-obhijog-backend/
 │       │   ├── notFound.ts
 │       │   └── validateRequest.ts
 │       ├── modules/           # Feature modules
+│       │   ├── complaint/     # Complaint module
+│       │   │   ├── complaint.constant.ts
+│       │   │   ├── complaint.controller.ts
+│       │   │   ├── complaint.dashboard.service.ts
+│       │   │   ├── complaint.interface.ts
+│       │   │   ├── complaint.model.ts
+│       │   │   ├── complaint.route.ts
+│       │   │   ├── complaint.service.ts
+│       │   │   └── complaint.validation.ts
 │       │   └── user/          # User module
 │       │       ├── user.constant.ts
 │       │       ├── user.controller.ts
@@ -228,6 +244,21 @@ pnpm run prettier:fix
 - **GET /api/v1/users/:id**: Get a specific user (superAdmin only)
 - **PATCH /api/v1/users/:id**: Update a user (superAdmin only)
 - **DELETE /api/v1/users/:id**: Delete a user (superAdmin only)
+
+### Complaint Endpoints
+
+- **GET /api/v1/complaints/public**: Get public complaints (no authentication required)
+- **POST /api/v1/complaints**: Create a new complaint (authenticated users only)
+- **GET /api/v1/complaints**: Get complaints (authenticated users, admins, superAdmins)
+- **PUT /api/v1/complaints/:id/resolve**: Resolve a complaint (admin and superAdmin only)
+- **POST /api/v1/complaints/:id/vote**: Vote on a complaint (authenticated users only)
+- **POST /api/v1/complaints/:id/comment**: Comment on a complaint (authenticated users only)
+
+### Dashboard Endpoints
+
+- **GET /api/v1/complaints/dashboard/citizen**: Get citizen dashboard data (authenticated users only)
+- **GET /api/v1/complaints/dashboard/admin**: Get admin dashboard data (admin only)
+- **GET /api/v1/complaints/dashboard/super**: Get super admin dashboard data (superAdmin only)
 
 ### Role-Based Permissions
 

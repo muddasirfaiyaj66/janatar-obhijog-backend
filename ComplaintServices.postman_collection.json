@@ -1,0 +1,714 @@
+{
+  "info": {
+    "_postman_id": "complaint-services-test-collection",
+    "name": "Janatar Obhijog - Complaint Services",
+    "description": "Complete Postman collection for testing all complaint-related API endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Authentication endpoints required for complaint operations",
+      "item": [
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"user@example.com\",\n    \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.accessToken) {",
+                  "        pm.environment.set('accessToken', response.data.accessToken);",
+                  "        pm.environment.set('refreshToken', response.data.refreshToken);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"admin@example.com\",\n    \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.accessToken) {",
+                  "        pm.environment.set('adminAccessToken', response.data.accessToken);",
+                  "        pm.environment.set('adminRefreshToken', response.data.refreshToken);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Super Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"superadmin@example.com\",\n    \"password\": \"superadmin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data.accessToken) {",
+                  "        pm.environment.set('superAdminAccessToken', response.data.accessToken);",
+                  "        pm.environment.set('superAdminRefreshToken', response.data.refreshToken);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Complaint Management",
+      "description": "Core complaint CRUD operations",
+      "item": [
+        {
+          "name": "Create Complaint (Public)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Road damage in Mirpur area\",\n    \"description\": \"There is a large pothole in front of Mirpur-10 roundabout that needs immediate attention. It's causing traffic congestion and vehicle damage.\",\n    \"category\": \"Infrastructure\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"road-infrastructure\",\n    \"isAnonymous\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.data && response.data._id) {",
+                  "        pm.environment.set('complaintId', response.data._id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Complaint (Private)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Water supply issues in my building\",\n    \"description\": \"We have been experiencing low water pressure and irregular water supply in our apartment building for the past week.\",\n    \"category\": \"Utilities\",\n    \"priority\": \"medium\",\n    \"visibility\": \"private\",\n    \"department\": \"water-supply\",\n    \"isAnonymous\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints"]
+            }
+          }
+        },
+        {
+          "name": "Create Anonymous Complaint",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Corruption in local government office\",\n    \"description\": \"I witnessed bribery taking place at the local municipality office. Officials are demanding extra money for basic services.\",\n    \"category\": \"Corruption\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"corruption\",\n    \"isAnonymous\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints"]
+            }
+          }
+        },
+        {
+          "name": "Get Public Complaints (No Auth)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/complaints/public",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "public"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "sortBy",
+                  "value": "createdAt",
+                  "disabled": true
+                },
+                {
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Complaints (User)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "disabled": true
+                },
+                {
+                  "key": "status",
+                  "value": "pending",
+                  "disabled": true
+                },
+                {
+                  "key": "priority",
+                  "value": "high",
+                  "disabled": true
+                },
+                {
+                  "key": "department",
+                  "value": "road-infrastructure",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Complaints (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminAccessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/complaints",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "disabled": true
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Complaint Actions",
+      "description": "Voting, commenting, and resolution actions",
+      "item": [
+        {
+          "name": "Vote on Complaint",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints/{{complaintId}}/vote",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "{{complaintId}}", "vote"]
+            }
+          }
+        },
+        {
+          "name": "Comment on Complaint",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"text\": \"I have the same issue in my area. This needs urgent attention from the authorities.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints/{{complaintId}}/comment",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "{{complaintId}}", "comment"]
+            }
+          }
+        },
+        {
+          "name": "Resolve Complaint (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"comment\": \"The road has been repaired and the pothole has been filled. The issue is now resolved.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints/{{complaintId}}/resolve",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "{{complaintId}}", "resolve"]
+            }
+          }
+        },
+        {
+          "name": "Resolve Complaint (Super Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{superAdminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"comment\": \"Complaint resolved after investigation. Necessary actions have been taken.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/complaints/{{complaintId}}/resolve",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "{{complaintId}}", "resolve"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard Services",
+      "description": "Dashboard endpoints for different user roles",
+      "item": [
+        {
+          "name": "Citizen Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/complaints/dashboard/citizen",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "dashboard", "citizen"]
+            }
+          }
+        },
+        {
+          "name": "Admin Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminAccessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/complaints/dashboard/admin",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "dashboard", "admin"]
+            }
+          }
+        },
+        {
+          "name": "Super Admin Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{superAdminAccessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/complaints/dashboard/super",
+              "host": ["{{baseUrl}}"],
+              "path": ["complaints", "dashboard", "super"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Test Scenarios",
+      "description": "Complex test scenarios for comprehensive testing",
+      "item": [
+        {
+          "name": "Test Different Departments",
+          "item": [
+            {
+              "name": "Health Department Complaint",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Unhygienic conditions at local hospital\",\n    \"description\": \"The local government hospital has poor sanitation and cleanliness standards. Patients are at risk of infections.\",\n    \"category\": \"Health\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"health\",\n    \"isAnonymous\": false\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/complaints",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["complaints"]
+                }
+              }
+            },
+            {
+              "name": "Education Department Complaint",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Shortage of teachers in primary school\",\n    \"description\": \"The local primary school has been operating with only 2 teachers for 150 students for the past 3 months.\",\n    \"category\": \"Education\",\n    \"priority\": \"high\",\n    \"visibility\": \"public\",\n    \"department\": \"education\",\n    \"isAnonymous\": false\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/complaints",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["complaints"]
+                }
+              }
+            },
+            {
+              "name": "Traffic Department Complaint",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Missing traffic signals causing accidents\",\n    \"description\": \"The traffic signal at the main intersection has been broken for 2 weeks, causing multiple minor accidents.\",\n    \"category\": \"Traffic\",\n    \"priority\": \"urgent\",\n    \"visibility\": \"public\",\n    \"department\": \"traffic\",\n    \"isAnonymous\": false\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/complaints",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["complaints"]
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Test Different Priorities",
+          "item": [
+            {
+              "name": "Low Priority Complaint",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Request for more street lights\",\n    \"description\": \"Our neighborhood would benefit from additional street lighting for better visibility at night.\",\n    \"category\": \"Infrastructure\",\n    \"priority\": \"low\",\n    \"visibility\": \"public\",\n    \"department\": \"municipality\",\n    \"isAnonymous\": false\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/complaints",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["complaints"]
+                }
+              }
+            },
+            {
+              "name": "Medium Priority Complaint",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{accessToken}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"Garbage collection delays\",\n    \"description\": \"Garbage collection in our area has been delayed by 2-3 days regularly, causing hygiene issues.\",\n    \"category\": \"Sanitation\",\n    \"priority\": \"medium\",\n    \"visibility\": \"public\",\n    \"department\": \"waste-management\",\n    \"isAnonymous\": false\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/complaints",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["complaints"]
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Automatically set baseUrl if not already set",
+          "if (!pm.environment.get('baseUrl')) {",
+          "    pm.environment.set('baseUrl', 'http://localhost:5000/api/v1');",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Global test script for logging response details",
+          "pm.test('Response time is less than 2000ms', function () {",
+          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+          "});",
+          "",
+          "pm.test('Response has valid JSON structure', function () {",
+          "    pm.response.to.have.jsonBody();",
+          "});"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api/v1",
+      "type": "string",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string",
+      "description": "Access token for regular user authentication"
+    },
+    {
+      "key": "adminAccessToken",
+      "value": "",
+      "type": "string",
+      "description": "Access token for admin authentication"
+    },
+    {
+      "key": "superAdminAccessToken",
+      "value": "",
+      "type": "string",
+      "description": "Access token for super admin authentication"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string",
+      "description": "Refresh token for regular user"
+    },
+    {
+      "key": "adminRefreshToken",
+      "value": "",
+      "type": "string",
+      "description": "Refresh token for admin"
+    },
+    {
+      "key": "superAdminRefreshToken",
+      "value": "",
+      "type": "string",
+      "description": "Refresh token for super admin"
+    },
+    {
+      "key": "complaintId",
+      "value": "",
+      "type": "string",
+      "description": "ID of created complaint for testing purposes"
+    }
+  ]
+}

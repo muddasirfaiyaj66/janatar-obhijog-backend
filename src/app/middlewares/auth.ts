@@ -13,12 +13,10 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const tokenWithBearer = req.headers.authorization;
     const token = tokenWithBearer && tokenWithBearer.split(' ')[1];
 
-    // checking if the token is missing
     if (!token) {
       throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized!');
     }
 
-    // checking if the given token is valid
     let decoded;
     try {
       decoded = jwt.verify(
@@ -31,19 +29,19 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     const { role, email, iat } = decoded;
 
-    // checking if the user exists
+    
     const user = await User.isUserExistByEmail(email);
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found!');
     }
 
-    // checking if the user is deleted
+   
     if (user.isDeleted) {
       throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted!');
     }
 
-    // checking if password was changed after token issued
+    
     if (
       user.passwordChangedAt &&
       User.isJWTIssuedBeforePasswordChanged(

@@ -1,4 +1,3 @@
-
 const LOGO_URL =
   'https://res.cloudinary.com/dcqr7rkm6/image/upload/v1758203448/logoTransparent_wdyzfy.png';
 
@@ -81,11 +80,9 @@ export const generateComplaintSubmittedEmailHTML = ({
 export const generateComplaintResolvedEmailHTML = ({
   name,
   complaintId,
-  websiteURL,
 }: {
   name: string;
   complaintId: string;
-  websiteURL: string;
 }) => {
   const safeName = escapeHtml(name);
   const safeComplaintId = escapeHtml(complaintId);
@@ -107,6 +104,45 @@ export const generateComplaintResolvedEmailHTML = ({
       <div style="text-align:center;margin:32px 0;">
         <a href="${websiteURL}/dashboard" style="display:inline-block;background:#d32f2f;color:#fff;text-decoration:none;padding:14px 38px;border-radius:8px;font-size:15px;font-weight:600;box-shadow:0 4px 14px rgba(211,47,47,0.25);">ড্যাশবোর্ড দেখুন</a>
       </div>
+    </div>
+    <div style="background:#f4f6fb;text-align:center;padding:16px;color:#555;font-size:13px;">
+      &copy; ${year} জনতার অভিযোগ। সর্বস্বত্ব সংরক্ষিত।
+    </div>
+  </div>
+</body>
+</html>`;
+};
+
+// 4. Password Reset Email
+export const generatePasswordResetEmailHTML = ({
+  name,
+  resetLink,
+}: {
+  name: string;
+  resetLink: string;
+}) => {
+  const safeName = escapeHtml(name);
+  const safeResetLink = escapeHtml(resetLink);
+  const year = new Date().getFullYear();
+  return `<!DOCTYPE html>
+<html lang="bn">
+<head><meta charset="utf-8"/></head>
+<body style="margin:0;padding:0;background:#f4f6fb;font-family:'Segoe UI',Arial,sans-serif;">
+  <div style="max-width:600px;margin:40px auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.08);">
+    <div style="background:linear-gradient(135deg,#1b5e20,#d32f2f);text-align:center;padding:28px 16px;">
+      <img src="${LOGO_URL}" alt="Janatar Obhijog Logo" style="height:120px;margin-bottom:12px;" />
+      <h1 style="color:#fff;font-size:22px;font-weight:700;margin:0;">পাসওয়ার্ড রিসেট</h1>
+    </div>
+    <div style="padding:32px 28px;color:#333;line-height:1.7;">
+      <h2 style="font-size:18px;color:#1b5e20;margin:0 0 12px;">প্রিয় ${safeName},</h2>
+      <p>আপনি আপনার পাসওয়ার্ড রিসেট করার জন্য অনুরোধ করেছেন। নিচের বাটনে ক্লিক করে নতুন পাসওয়ার্ড সেট করুন।</p>
+      <p style="color:#e65100;font-size:14px;"><strong>বিশেষ দ্রষ্টব্য:</strong> এই লিংকটি ১০ মিনিটের জন্য বৈধ থাকবে।</p>
+      <div style="text-align:center;margin:32px 0;">
+        <a href="${safeResetLink}" style="display:inline-block;background:#d32f2f;color:#fff;text-decoration:none;padding:14px 38px;border-radius:8px;font-size:15px;font-weight:600;box-shadow:0 4px 14px rgba(211,47,47,0.25);">পাসওয়ার্ড রিসেট করুন</a>
+      </div>
+      <p style="color:#777;font-size:13px;">যদি আপনি এই অনুরোধ করেননি, তাহলে এই ইমেইলটি উপেক্ষা করুন। আপনার একাউন্ট নিরাপদ থাকবে।</p>
+      <p style="color:#777;font-size:13px;">যদি বাটনটি কাজ না করে, তাহলে এই লিংকটি কপি করে ব্রাউজারে পেস্ট করুন:<br>
+      <span style="word-break:break-all;color:#1565c0;">${safeResetLink}</span></p>
     </div>
     <div style="background:#f4f6fb;text-align:center;padding:16px;color:#555;font-size:13px;">
       &copy; ${year} জনতার অভিযোগ। সর্বস্বত্ব সংরক্ষিত।

@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { USER_ROLE } from './user.constant';
+import { TQuery } from '../../interface/query';
 
 const createUser = catchAsync(async (req, res) => {
   const result = await UserService.createUserIntoDB(req.body);
@@ -32,12 +33,13 @@ const createUser = catchAsync(async (req, res) => {
 });
 
 const getAllUsers = catchAsync(async (req, res) => {
-  const result = await UserService.getAllUserFromDB();
+  const result = await UserService.getAllUserFromDB(req.query as TQuery);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Users fetched successfully',
-    data: result,
+    data: result.data,
+    meta: result.pagination,
   });
 });
 

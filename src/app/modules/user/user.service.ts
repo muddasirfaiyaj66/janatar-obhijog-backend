@@ -5,6 +5,8 @@ import { User } from './user.model';
 import mongoose from 'mongoose';
 import { createToken } from '../../auth/auth.utils';
 import config from '../../config';
+import QueryBuilder from '../../utils/QueryBuilder';
+import { TQuery, TQueryResult } from '../../interface/query';
 
 export const createUserIntoDB = async (
   payload: TUser,
@@ -103,9 +105,34 @@ const deleteUserFromDB = async (userId: string): Promise<TUser | null> => {
   }
 };
 
-const getAllUserFromDB = async (): Promise<TUser[]> => {
-  const users = await User.find({ isDeleted: false });
-  return users.map((user) => user.toObject());
+const getAllUserFromDB = async (
+  query: TQuery,
+): Promise<TQueryResult<TUser>> => {
+  const baseQuery = User.find({ isDeleted: false });
+
+  // Apply search, filter, sort, and pagination
+  const userQuery = new QueryBuilder(baseQuery, query)
+    .search([
+      'firstName',
+      'lastName',
+      'email',
+      'phone',
+      'department',
+      'designation',
+    ])
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  // Execute query
+  const data = await userQuery.modelQuery;
+  const pagination = await userQuery.getPaginationInfo();
+
+  return {
+    data: data.map((user) => user.toObject()),
+    pagination,
+  };
 };
 
 const getSingleUserFromDB = async (userId: string): Promise<TUser | null> => {
