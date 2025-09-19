@@ -2,7 +2,7 @@
   "info": {
     "_postman_id": "complaint-services-test-collection",
     "name": "Janatar Obhijog - Complaint Services",
-    "description": "Complete Postman collection for testing all complaint-related API endpoints. Updated to include new required location fields (postCode, thana, district, division, address) and optional media field (image/video URL) as per the latest validation schema.",
+    "description": "Complete Postman collection for testing all complaint-related API endpoints. Updated to include new required location fields (postCode, thana, district, division, address), optional media field (image/video URL), and AI-powered complaint analysis features for admins as per the latest validation schema.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -627,6 +627,112 @@
               }
             }
           ]
+        }
+      ]
+    },
+    {
+      "name": "AI Analysis",
+      "description": "AI-powered complaint analysis for admins and super admins",
+      "item": [
+        {
+          "name": "Analyze Complaints Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"complaintIds\": [\n        \"{{complaintId}}\",\n        \"60d9c4e4f3b4b544b8b8d1c5\",\n        \"60d9c4e4f3b4b544b8b8d1c6\"\n    ],\n    \"location\": {\n        \"thana\": \"Mirpur\",\n        \"district\": \"Dhaka\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/analyze-batch",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "analyze-batch"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Complaints by Location",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{superAdminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"location\": {\n        \"thana\": \"Mirpur\",\n        \"district\": \"Dhaka\",\n        \"division\": \"Dhaka\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/analyze-location",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "analyze-location"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Complaints by District",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{superAdminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"location\": {\n        \"district\": \"Dhaka\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/analyze-location",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "analyze-location"]
+            }
+          }
+        },
+        {
+          "name": "Analyze Complaints by Post Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminAccessToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"location\": {\n        \"postCode\": \"1216\"\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/analyze-location",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "analyze-location"]
+            }
+          }
         }
       ]
     }

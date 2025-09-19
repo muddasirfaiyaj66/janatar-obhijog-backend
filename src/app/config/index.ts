@@ -16,4 +16,5 @@ export default {
   reset_pass_ui_link: process.env.RESET_PASS_UI_LINK,
   mail_sent_Email: process.env.EMAIL_SEND_USER_EMAIL,
   mail_sent_pass: process.env.EMAIL_SEND_USER_PASS,
+  gemini_api_key: process.env.GEMINI_API_KEY,
 };
